@@ -1,6 +1,7 @@
 package com.project.dto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MemberDto {
 
@@ -74,8 +75,11 @@ public class MemberDto {
 		this.memberEmail = memberEmail;
 	}
 
-	public LocalDateTime getSignUpDate() {
-		return signUpDate;
+	public String getSignUpDate() {
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String formatDateTime = now.format(formatter);
+		return signUpDate.format(formatter);
 	}
 
 	public void setSignUpDate(LocalDateTime signUpDate) {
