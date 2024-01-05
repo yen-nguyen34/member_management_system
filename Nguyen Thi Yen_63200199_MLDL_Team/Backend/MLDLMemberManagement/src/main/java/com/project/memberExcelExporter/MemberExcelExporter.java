@@ -7,8 +7,6 @@ import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -42,6 +40,8 @@ public class MemberExcelExporter {
 		createCell(row, 2, "Name", style);
 		createCell(row, 3, "Phone", style);
 		createCell(row, 4, "Email", style);
+		createCell(row, 5, "Sign Up Date", style);
+
 
 	}
 
@@ -55,7 +55,7 @@ public class MemberExcelExporter {
 		} else if (valueOfCell instanceof String) {
 			cell.setCellValue((String) valueOfCell);
 		} else {
-			cell.setCellValue((Boolean) valueOfCell);
+			cell.setCellValue((LocalDateTime) valueOfCell);
 		}
 		cell.setCellStyle(style);
 	}
@@ -66,7 +66,6 @@ public class MemberExcelExporter {
 		XSSFFont font = workbook.createFont();
 		font.setFontHeight(14);
 		style.setFont(font);
-		LocalDateTime now = LocalDateTime.now();
 		for (MemberDto record : memberDtoList) {
 			Row row = sheet.createRow(rowCount++);
 			int columnCount = 0;
@@ -75,6 +74,7 @@ public class MemberExcelExporter {
 			createCell(row, columnCount++, record.getMemberName(), style);
 			createCell(row, columnCount++, record.getMemberPhone(), style);
 			createCell(row, columnCount++, record.getMemberEmail(), style);
+			createCell(row, columnCount++, record.getSignUpDate(), style);
 		}
 	}
 
