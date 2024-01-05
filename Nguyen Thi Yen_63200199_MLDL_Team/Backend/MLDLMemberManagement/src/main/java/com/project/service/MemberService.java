@@ -16,11 +16,17 @@ public interface MemberService {
 	List<MemberDto> getAllMembers();
 
 	List<Member> searchMembers(MemberSearchDto memberSearchDto);
-	
+
+	void exportSearchResultsToExcel(MemberSearchDto memberSearchDto, String filePath);
+
 	Optional<Member> getMemberByNo(long memberNo);
 	
 	Member updateMember(MemberUpdateDto memberUpdateDto);
 	
 	Boolean deleteMember(long memberNo);
+
+	Boolean checkDuplicateId(String memberId);
+
+	Boolean isValidPassword(String memberPwd);
 	
 }
