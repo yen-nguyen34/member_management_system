@@ -52,13 +52,25 @@ public class MemberController {
 		return member;
 	}
 
+	@GetMapping("/members/check-duplicate")
+	public ResponseEntity<Boolean> checkDuplicateId(@RequestParam String memberId) {
+		Boolean isDuplicate = memberService.checkDuplicateId(memberId);
+		return ResponseEntity.ok(isDuplicate);
+	}
+
+	@GetMapping("/members/validate-password")
+	public ResponseEntity<Boolean> validatePassword(@RequestParam String memberPwd) {
+		Boolean isValid = memberService.isValidPassword(memberPwd);
+		return ResponseEntity.ok(isValid);
+	}
+
 	@PostMapping("/members/search")
 	public List<Member> searchMembersByField(@RequestParam(value = "memberId", required = false) String memberId,
-			@RequestParam(value = "memberName", required = false) String memberName,
-			@RequestParam(value = "memberPhone", required = false) String memberPhone,
-			@RequestParam(value = "startDate", required = false) String startDate,
-			@RequestParam(value = "endDate", required = false) String endDate) {
-		
+											 @RequestParam(value = "memberName", required = false) String memberName,
+											 @RequestParam(value = "memberPhone", required = false) String memberPhone,
+											 @RequestParam(value = "startDate", required = false) String startDate,
+											 @RequestParam(value = "endDate", required = false) String endDate) {
+
 		MemberSearchDto memberSearchDto = new MemberSearchDto();
 		memberSearchDto.setMemberId(memberId);
 		memberSearchDto.setMemberName(memberName);
@@ -73,18 +85,17 @@ public class MemberController {
 	// download member search list
 	@GetMapping("/members/download")
 	public void exportExcelFile(HttpServletResponse response) throws IOException {
-		
+
 		response.setContentType("application/octet-stream");
 
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=members.xlsx";
-        response.setHeader(headerKey, headerValue);
-
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=members.xlsx";
+		response.setHeader(headerKey, headerValue);
 		List<MemberDto> memberListDto = memberService.getAllMembers();
-		
 		MemberExcelExporter generator = new MemberExcelExporter(memberListDto);
 		generator.generateExcelFile(response);
 	}
+
 
 	// get member by id
 	@GetMapping("/members/{memberNo}")
@@ -96,8 +107,8 @@ public class MemberController {
 	// update member by id
 	@PutMapping("/members/update/{memberNo}")
 	public ResponseEntity<?> updateMemberByNo(@PathVariable(value="memberNo") Long memberNo,
-	                                          @RequestBody MemberUpdateDto memberUpdateDto) throws NotFoundException {
-	    Member updatedMember = memberService.updateMember(memberUpdateDto);
+											  @RequestBody MemberUpdateDto memberUpdateDto) throws NotFoundException {
+		Member updatedMember = memberService.updateMember(memberUpdateDto);
 		return ResponseEntity.ok(updatedMember);
 	}
 
