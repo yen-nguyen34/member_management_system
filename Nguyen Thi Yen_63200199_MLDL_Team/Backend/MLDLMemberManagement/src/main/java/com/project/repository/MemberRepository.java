@@ -1,6 +1,7 @@
 package com.project.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,11 +16,11 @@ import com.project.entity.Member;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	@Query(value = "SELECT * FROM member "
-            + "WHERE member_id LIKE COALESCE(:memberId, member_id) "
-            + "AND member_name LIKE COALESCE(:memberName, member_name) "
-            + "AND member_phone LIKE COALESCE(:memberPhone, member_phone) "
-            + "AND sign_up_date BETWEEN COALESCE(:startDate, sign_up_date) AND COALESCE(:endDate, sign_up_date)",
-            nativeQuery = true)
+			+ "WHERE member_id LIKE COALESCE(:memberId, member_id) "
+			+ "AND member_name LIKE COALESCE(:memberName, member_name) "
+			+ "AND member_phone LIKE COALESCE(:memberPhone, member_phone) "
+			+ "AND sign_up_date BETWEEN COALESCE(:startDate, sign_up_date) AND COALESCE(:endDate, sign_up_date)",
+			nativeQuery = true)
 	List<Member> searchMembersbySQL(
 			@Param("memberId") String memberId,
 			@Param("memberName") String memberName,
@@ -27,4 +28,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 			@Param("startDate") String startDate,
 			@Param("endDate") String endDate);
 
+	Boolean existsByMemberId(String memberId);
+//	List<Member> listSearchMember(String query);
 }
