@@ -12,10 +12,9 @@ class MemberDataService {
         return axios.post(`${MEMBER_API_URL}/members/search`, null, { params });
     }
 
-    downloadMembers(){
-        return axios.get(`${MEMBER_API_URL}/members/download`);
+    downloadMembers(params) {
+        return axios.get(`${MEMBER_API_URL}/members/download`, { params, responseType: 'blob' });
     }
-
     retrieveMember(id) {
         return axios.get(`${MEMBER_API_URL}/members/${id}`);
     }
@@ -34,6 +33,14 @@ class MemberDataService {
 
     deleteMember(memberNo) {
         return axios.delete(`${MEMBER_API_URL}/members/delete/${memberNo}`);
+    }
+
+    checkDuplicateId(memberId) {
+        return axios.get(`${MEMBER_API_URL}/members/check-duplicate`, { params: { memberId } });
+    }
+
+    validatePassword(memberPwd) {
+        return axios.get(`${MEMBER_API_URL}/members/validate-password`, { params: { memberPwd } });
     }
 
 }
