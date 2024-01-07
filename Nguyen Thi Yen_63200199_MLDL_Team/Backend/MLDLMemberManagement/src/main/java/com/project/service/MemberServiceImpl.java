@@ -52,8 +52,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void exportSearchResultsToExcel(MemberSearchDto memberSearchDto, String filePath) {
-		List<MemberDto> memberDtoList = convertToMemberDtoList(searchMembers(memberSearchDto));
+	public List<MemberDto>  exportSearchResultsToExcel(MemberSearchDto memberSearchDto) {
+		return convertToMemberDtoList(searchMembers(memberSearchDto));
 	}
 
 	private List<MemberDto> convertToMemberDtoList(List<Member> members){
