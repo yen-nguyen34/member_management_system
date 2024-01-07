@@ -1,6 +1,9 @@
 <template>
   <div class="relative shadow-md sm:rounded-lg">
     <br />
+
+    <!-- SEARCH FORM -->
+
     <form class="w-full" @submit.prevent="handleSearchParams">
       <div
         class="mt-2 text-sm font-bold text-red-600 dark:text-red-500"
@@ -179,6 +182,7 @@
               {{ formatSignUpDate(member.signUpDate) }}
             </td>
             <td class="px-6 py-4">
+              <!-- Update button -->
               <button
                 type="button"
                 class="focus:outline-none px-5"
@@ -199,10 +203,12 @@
                   />
                 </svg>
               </button>
+
+              <!-- DELETE BUTTON -->
               <button
                 type="button"
                 class="focus:outline-none px-5"
-                @click="deleteMember(member)"
+                @click="showDeleteButton"
               >
                 <svg
                   class="w-6 h-6 text-red-500 dark:text-white"
@@ -216,6 +222,74 @@
                   />
                 </svg>
               </button>
+
+              <!-- DELETE CONFIRM FORM -->
+
+              <div
+                v-if="confirmDeleteForm"
+                :class="{ 'blur-background': confirmDeleteForm }"
+                class="fixed inset-0 flex items-center justify-center bg-opacity-75 backdrop-blur-md"
+              >
+                <div
+                  class="bg-white dark:bg-gray-800 p-6 border rounded-lg shadow-lg"
+                >
+                  <div class="flex justify-end">
+                    <button
+                      @click="closeDeleteConfirmForm"
+                      type="button"
+                      class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                    >
+                      <svg
+                        class="w-5 h-5"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="p-6 pt-0 text-center">
+                    <svg
+                      class="w-20 h-20 text-red-600 mx-auto"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      ></path>
+                    </svg>
+                    <h3 class="text-xl font-normal text-gray-500 mt-5 mb-6">
+                      Are you sure you want to delete this member?
+                    </h3>
+                    <button
+                      type="button"
+                      @click="confirmDelete(member)"
+                      class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2"
+                    >
+                      Yes, I'm sure
+                    </button>
+                    <button
+                      @click="closeDeleteConfirmForm"
+                      type="button"
+                      class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center"
+                    >
+                      No, cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+
             </td>
           </tr>
         </tbody>
@@ -316,6 +390,8 @@ export default {
       errors: [],
       itemsPerPage: 5,
       currentPage: 1,
+      confirmDeleteForm: false,
+      memberToDelete: null,
     };
   },
 
@@ -442,11 +518,23 @@ export default {
       }
     },
 
-    deleteMember(member) {
-      if (confirm("Do you want to delete?")) {
-        MemberService.deleteMember(member.memberNo)
+    showDeleteButton() {
+      // ẩn confirm form bằng cách set confirmDeleteForm=false,
+      // muốn hiển thị khi ấn thì set confirmDeleteForm=true
+      this.confirmDeleteForm = !this.confirmDeleteForm;
+    },
+
+    closeDeleteConfirmForm() {
+      this.confirmDeleteForm = false;
+    },
+
+    confirmDelete(member) {
+      this.memberToDelete = member;
+      if (this.memberToDelete) {
+        MemberService.deleteMember(this.memberToDelete.memberNo)
           .then((res) => {
             this.refresherMembers();
+            this.closeDeleteConfirmForm();
           })
           .catch((error) => {
             console.log("Error delete member!", error);
@@ -478,3 +566,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.blur-background {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+</style>
