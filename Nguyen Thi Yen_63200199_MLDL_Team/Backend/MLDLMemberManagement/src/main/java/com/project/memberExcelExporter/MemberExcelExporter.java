@@ -36,11 +36,12 @@ public class MemberExcelExporter {
 		font.setFontHeight(16);
 		style.setFont(font);
 		createCell(row, 0, "No.", style);
-		createCell(row, 1, "ID", style);
-		createCell(row, 2, "Name", style);
-		createCell(row, 3, "Phone", style);
-		createCell(row, 4, "Email", style);
-		createCell(row, 5, "Sign Up Date", style);
+		createCell(row, 1, "Member No.", style);
+		createCell(row, 2, "ID", style);
+		createCell(row, 3, "Name", style);
+		createCell(row, 4, "Phone", style);
+		createCell(row, 5, "Email", style);
+		createCell(row, 6, "Sign Up Date", style);
 
 
 	}
@@ -66,15 +67,18 @@ public class MemberExcelExporter {
 		XSSFFont font = workbook.createFont();
 		font.setFontHeight(14);
 		style.setFont(font);
+		int count = 1;
 		for (MemberDto record : memberDtoList) {
 			Row row = sheet.createRow(rowCount++);
 			int columnCount = 0;
+			createCell(row, columnCount++, count, style);
 			createCell(row, columnCount++, record.getMemberNo(), style);
 			createCell(row, columnCount++, record.getMemberId(), style);
 			createCell(row, columnCount++, record.getMemberName(), style);
 			createCell(row, columnCount++, record.getMemberPhone(), style);
 			createCell(row, columnCount++, record.getMemberEmail(), style);
 			createCell(row, columnCount++, record.getSignUpDate(), style);
+			count++;
 		}
 	}
 
