@@ -78,20 +78,31 @@ public class MemberController {
 		memberSearchDto.setStartDate(startDate);
 		memberSearchDto.setEndDate(endDate);
 
-		List<Member> members = memberService.searchMembers(memberSearchDto);
-		return members;
+		return memberService.searchMembers(memberSearchDto);
 	}
 
 	// download member search list
 	@GetMapping("/members/download")
-	public void exportExcelFile(HttpServletResponse response) throws IOException {
+	public void exportExcelFile(@RequestParam(value = "memberId", required = false) String memberId,
+								@RequestParam(value = "memberName", required = false) String memberName,
+								@RequestParam(value = "memberPhone", required = false) String memberPhone,
+								@RequestParam(value = "startDate", required = false) String startDate,
+								@RequestParam(value = "endDate", required = false) String endDate,
+								HttpServletResponse response) throws IOException {
 
 		response.setContentType("application/octet-stream");
+
+		MemberSearchDto memberSearchDto = new MemberSearchDto();
+		memberSearchDto.setMemberId(memberId);
+		memberSearchDto.setMemberName(memberName);
+		memberSearchDto.setMemberPhone(memberPhone);
+		memberSearchDto.setStartDate(startDate);
+		memberSearchDto.setEndDate(endDate);
 
 		String headerKey = "Content-Disposition";
 		String headerValue = "attachment; filename=members.xlsx";
 		response.setHeader(headerKey, headerValue);
-		List<MemberDto> memberListDto = memberService.getAllMembers();
+		List<MemberDto> memberListDto = memberService.exportSearchResultsToExcel(memberSearchDto);
 		MemberExcelExporter generator = new MemberExcelExporter(memberListDto);
 		generator.generateExcelFile(response);
 	}
