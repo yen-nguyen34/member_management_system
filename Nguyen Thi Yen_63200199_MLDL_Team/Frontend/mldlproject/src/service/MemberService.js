@@ -15,8 +15,8 @@ class MemberDataService {
     downloadMembers(params) {
         return axios.get(`${MEMBER_API_URL}/members/download`, { params, responseType: 'blob' });
     }
-    retrieveMember(id) {
-        return axios.get(`${MEMBER_API_URL}/members/${id}`);
+    retrieveMember(memberNo) {
+        return axios.get(`${MEMBER_API_URL}/members/${memberNo}`);
     }
 
     signUpMember(member) {
@@ -27,8 +27,8 @@ class MemberDataService {
         return axios.post(`${MEMBER_API_URL}/members/create`, member);
     }
 
-    updateMember(id, member) {
-        return axios.put(`${MEMBER_API_URL}/members/update/${id}`, member);
+    updateMember(memberNo, member) {
+        return axios.put(`${MEMBER_API_URL}/members/update/${memberNo}`, member);
     }
 
     deleteMember(memberNo) {

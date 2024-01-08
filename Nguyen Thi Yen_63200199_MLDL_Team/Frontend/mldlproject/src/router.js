@@ -10,7 +10,12 @@ const routes =  [
         path: "/members",
         name: "ViewAllMembers",
         component: () => import("./components/ViewAllMembers"),
-    }
+    },
+    {
+        path: "/members/:memberNo",
+        name: "UpdateMember",
+        component: () => import("./components/UpdateMember"),
+    },
 ];
 
 const router = createRouter({

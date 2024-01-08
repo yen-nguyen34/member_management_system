@@ -227,6 +227,8 @@
                         memberConfirmPwd: this.member.memberConfirmPwd,
                         memberName: this.member.memberName,
                         memberPhone: this.member.memberPhone,
+                        memberEmailName: this.member.memberEmail,
+                        memberSelectedDomain: this.member.memberSelectedDomain,
                         memberEmail: this.fullEmail,
                       }).then(() => {
                         // redirect url "/members" to view all members

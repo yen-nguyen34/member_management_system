@@ -110,17 +110,15 @@ public class MemberController {
 
 	// get member by id
 	@GetMapping("/members/{memberNo}")
-	public Optional<Member> getMemberNo(@PathVariable(value = "memberNo") Long memberNo){;
-		Optional<Member> member = memberService.getMemberByNo(memberNo);
-		return member;
+	public Member getMemberNo(@PathVariable(value = "memberNo") long memberNo){;
+		return memberService.getMemberByNo(memberNo);
 	}
 
 	// update member by id
 	@PutMapping("/members/update/{memberNo}")
-	public ResponseEntity<?> updateMemberByNo(@PathVariable(value="memberNo") Long memberNo,
-											  @RequestBody MemberUpdateDto memberUpdateDto) throws NotFoundException {
-		Member updatedMember = memberService.updateMember(memberUpdateDto);
-		return ResponseEntity.ok(updatedMember);
+	public Member updateMemberByNo(@PathVariable(value="memberNo") Long memberNo,
+											  @RequestBody MemberUpdateDto memberUpdateDto) {
+		return memberService.updateMember(memberNo, memberUpdateDto);
 	}
 
 	// delete member by id

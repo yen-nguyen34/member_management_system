@@ -182,11 +182,12 @@
               {{ formatSignUpDate(member.signUpDate) }}
             </td>
             <td class="px-6 py-4">
-              <!-- Update button -->
+
+              <!-- UPDATE BUTTON -->
               <button
                 type="button"
                 class="focus:outline-none px-5"
-                @click="updateMember(member.memberId)"
+                @click="showUpdateButton(member.memberNo)"
               >
                 <svg
                   class="w-6 h-6 text-teal-500 dark:text-white"
@@ -203,6 +204,9 @@
                   />
                 </svg>
               </button>
+
+              <!-- UPDATE CONFIRM FORM -->
+
 
               <!-- DELETE BUTTON -->
               <button
@@ -516,6 +520,10 @@ export default {
       if (this.currentPage > 1) {
         this.currentPage--;
       }
+    },
+
+    showUpdateButton(memberNo){
+      this.$router.push(`/members/${memberNo}`);
     },
 
     showDeleteButton() {

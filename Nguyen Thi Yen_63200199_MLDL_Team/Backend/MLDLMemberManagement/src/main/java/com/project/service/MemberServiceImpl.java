@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import com.project.dto.MemberDto;
@@ -114,28 +115,29 @@ public class MemberServiceImpl implements MemberService {
 
 	// get Member by memberNo
 	@Override
-	public Optional<Member> getMemberByNo(long memberNo) {
+	public Member getMemberByNo(long memberNo) {
 		Optional<Member> member = memberRepository.findById(memberNo);
-		return member;
+		if (member.isPresent()){
+			return member.get();
+		}
+		return null;
 	}
 
 	// update member by memberNo
 	@Override
-	public Member updateMember(MemberUpdateDto memberUpdateDto) {
-		Optional<Member> optionalMember = memberRepository.findById(memberUpdateDto.getMemberNo());
-
-		if (optionalMember.isPresent()) {
-			Member existingMember = optionalMember.get();
+	public Member updateMember(long memberNo,MemberUpdateDto memberUpdateDto) {
+		Optional<Member> member = memberRepository.findById(memberUpdateDto.getMemberNo());
+		LocalDateTime now = LocalDateTime.now();
+		if (member.isPresent()) {
+			Member existingMember = new Member();
+			existingMember.setMemberId(memberUpdateDto.getMemberId());
 			existingMember.setMemberName(memberUpdateDto.getMemberName());
 			existingMember.setMemberPwd(memberUpdateDto.getMemberPwd());
 			existingMember.setMemberPhone(memberUpdateDto.getMemberPhone());
 			existingMember.setMemberEmail(memberUpdateDto.getMemberEmail());
-
+			existingMember.setUpdateDate(memberUpdateDto.getUpdateDate());
 			return memberRepository.save(existingMember);
-		} else {
-			System.out.println("Member not found with memberNo: " + memberUpdateDto.getMemberNo());
+		}
 			return null;
 		}
 	}
-
-}

@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 public class MemberUpdateDto {
 	
 	private long memberNo;
+
+	private String memberId;
 	
 	private String memberName;
 	
@@ -20,16 +22,25 @@ public class MemberUpdateDto {
 		
 	}
 	
-	public MemberUpdateDto(String memberName, String memberPwd, String memberPhone, String memberEmail, LocalDateTime updateDate) {
+	public MemberUpdateDto(String memberId, String memberName, String memberPwd, String memberPhone, String memberEmail, LocalDateTime updateDate) {
 		super();
-	
+
+		this.memberId = memberId;
 		this.memberName = memberName;
 		this.memberPwd = memberPwd;
 		this.memberPhone = memberPhone;
 		this.memberEmail = memberEmail;
 		this.updateDate = updateDate;
 	}
-	
+
+	public void setMemberId(String memberId){
+		this.memberId = memberId;
+	}
+
+	public String getMemberId(){
+		return memberId;
+	}
+
 	public LocalDateTime getUpdateDate() {
 		return updateDate;
 	}

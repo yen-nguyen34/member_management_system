@@ -18,9 +18,9 @@ public interface MemberService {
 	List<Member> searchMembers(MemberSearchDto memberSearchDto);
 
 	List<MemberDto> exportSearchResultsToExcel(MemberSearchDto memberSearchDto);
-	Optional<Member> getMemberByNo(long memberNo);
+	Member getMemberByNo(long memberNo);
 
-	Member updateMember(MemberUpdateDto memberUpdateDto);
+	Member updateMember(long memberNo, MemberUpdateDto memberUpdateDto);
 
 	Boolean deleteMember(long memberNo);
 
