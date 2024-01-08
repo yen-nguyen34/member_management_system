@@ -199,7 +199,6 @@ export default {
         this.member.memberName = response.data.memberName;
         this.member.memberPhone = response.data.memberPhone;
         this.member.memberEmail = response.data.memberEmail;
-        this.member.memberEmail = response.data.memberEmail;
       });
     },
 
@@ -281,10 +280,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.blur-background {
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-</style>
