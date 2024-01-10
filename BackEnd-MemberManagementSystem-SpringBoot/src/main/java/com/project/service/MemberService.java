@@ -3,15 +3,14 @@ package com.project.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.project.dto.MemberDto;
-import com.project.dto.MemberSaveDto;
-import com.project.dto.MemberSearchDto;
-import com.project.dto.MemberUpdateDto;
+import com.project.dto.*;
 import com.project.entity.Member;
 
 public interface MemberService {
 
     Member signUpMember(MemberSaveDto memberSaveDto);
+
+    Member addMember(MemberSaveDto memberSaveDto);
 
     List<MemberDto> getAllMembers();
 
@@ -28,5 +27,7 @@ public interface MemberService {
     Boolean checkDuplicateId(String memberId);
 
     Boolean isValidPassword(String memberPwd);
+
+    LoginResponse loginResponse(String message, boolean status);
 
 }

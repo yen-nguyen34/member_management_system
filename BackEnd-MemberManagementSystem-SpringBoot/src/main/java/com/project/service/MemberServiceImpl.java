@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.project.dto.*;
 import com.project.exception.MemberErrorResponse;
 import com.project.exception.MemberNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.project.dto.MemberDto;
-import com.project.dto.MemberSaveDto;
-import com.project.dto.MemberSearchDto;
-import com.project.dto.MemberUpdateDto;
 import com.project.entity.Member;
 import com.project.repository.MemberRepository;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,6 +27,14 @@ public class MemberServiceImpl implements MemberService {
     // sign-up
     @Override
     public Member signUpMember(MemberSaveDto memberSaveDto) {
+        LocalDateTime now = LocalDateTime.now();
+        Member member = new Member(memberSaveDto.getMemberId(), memberSaveDto.getMemberName(),
+                memberSaveDto.getMemberPwd(), memberSaveDto.getMemberPhone(), memberSaveDto.getMemberEmail(), now, now);
+        return memberRepository.save(member);
+    }
+
+    @Override
+    public Member addMember(MemberSaveDto memberSaveDto) {
         LocalDateTime now = LocalDateTime.now();
         Member member = new Member(memberSaveDto.getMemberId(), memberSaveDto.getMemberName(),
                 memberSaveDto.getMemberPwd(), memberSaveDto.getMemberPhone(), memberSaveDto.getMemberEmail(), now, now);
@@ -78,7 +83,7 @@ public class MemberServiceImpl implements MemberService {
         if (memberRepository.existsById(memberNo)) {
             memberRepository.deleteById(memberNo);
         } else {
-            System.out.println("Member not found!");
+            throw new MemberNotFoundException("Member Not Found for ID: " + memberNo);
         }
         return true;
     }
@@ -118,7 +123,6 @@ public class MemberServiceImpl implements MemberService {
                 memberPwd.matches(regexSpecialChar) && memberPwd.matches(regexLength3Combinations) && memberPwd.matches(regexConsecutiveDigits)));
     }
 
-
     // get Member by memberNo
     @Override
     public Member getMemberByNo(long memberNo) {
@@ -141,5 +145,12 @@ public class MemberServiceImpl implements MemberService {
         member.setMemberEmail(memberUpdateDto.getMemberEmail());
         member.setUpdateDate(now);
         return memberRepository.save(member);
+    }
+
+    // Log in by ID and Password
+    @Override
+    public LoginResponse loginResponse(String message, boolean status) {
+        
+        return null;
     }
 }

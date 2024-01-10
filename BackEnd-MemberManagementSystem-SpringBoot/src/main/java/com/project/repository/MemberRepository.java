@@ -29,4 +29,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             @Param("endDate") String endDate);
 
     Boolean existsByMemberId(String memberId);
+
+    Member findMemberByIDandPassword(String memberId, String memberPwd);
 }

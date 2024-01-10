@@ -45,6 +45,12 @@ public class MemberController {
         return member;
     }
 
+    @PostMapping("/members/add")
+    public Member addMemberAccount(@RequestBody MemberSaveDto memberSaveDto) {
+        Member member = memberService.addMember(memberSaveDto);
+        return member;
+    }
+
     @GetMapping("/members/check-duplicate")
     public ResponseEntity<Boolean> checkDuplicateId(@RequestParam String memberId) {
         Boolean isDuplicate = memberService.checkDuplicateId(memberId);
