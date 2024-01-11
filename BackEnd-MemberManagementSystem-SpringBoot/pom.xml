@@ -10,10 +10,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.project</groupId>
-    <artifactId>MLDLMemberManagement</artifactId>
+    <artifactId>BackEnd-MemberManagementSystem-SpringBoot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>MLDLMemberManagement</name>
-    <description>MLDL Member Management</description>
+    <name>BackEnd-MemberManagementSystem-SpringBoot</name>
+    <description>BackEnd-MemberManagementSystem-SpringBoot</description>
     <properties>
         <java.version>17</java.version>
     </properties>

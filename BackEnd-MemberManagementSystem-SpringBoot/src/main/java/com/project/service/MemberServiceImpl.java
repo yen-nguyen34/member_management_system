@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.entity.Member;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Service
 public class MemberServiceImpl implements MemberService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -149,8 +153,19 @@ public class MemberServiceImpl implements MemberService {
 
     // Log in by ID and Password
     @Override
-    public LoginResponse loginResponse(String message, boolean status) {
-        
-        return null;
+    public LoginResponse loginResponse(MemberLoginDto memberLoginDto) {
+        Member member = memberRepository.findByMemberId(memberLoginDto.getMemberId());
+        if (member != null) {
+            String password = memberLoginDto.getMemberPwd();
+            String encodedPwd = member.getMemberPwd();
+            boolean isRightPwd = passwordEncoder.matches(password, encodedPwd);
+            if (isRightPwd) {
+                return new LoginResponse("Login Success!", true);
+            } else {
+                return new LoginResponse("Password is incorrect!", false);
+            }
+        } else {
+            return new LoginResponse("ID is incorrect!", false);
+        }
     }
 }

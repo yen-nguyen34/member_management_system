@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import com.project.dto.*;
 import com.project.exception.MemberErrorResponse;
 import com.project.exception.MemberNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.project.dto.MemberDto;
-import com.project.dto.MemberSaveDto;
-import com.project.dto.MemberSearchDto;
-import com.project.dto.MemberUpdateDto;
 import com.project.entity.Member;
 import com.project.memberExcelExporter.MemberExcelExporter;
 import com.project.service.MemberService;
@@ -128,5 +125,10 @@ public class MemberController {
         return "deleted";
     }
 
-
+    @PostMapping("/members/login")
+    public ResponseEntity<?> loginMember(@RequestBody MemberLoginDto memberLoginDto) {
+        System.out.println("RUNNING CONTROLLER");
+        LoginResponse loginResponse = memberService.loginResponse(memberLoginDto);
+        return ResponseEntity.ok(loginResponse);
+    }
 }

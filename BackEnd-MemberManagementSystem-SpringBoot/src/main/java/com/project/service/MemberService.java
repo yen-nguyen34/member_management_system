@@ -28,6 +28,6 @@ public interface MemberService {
 
     Boolean isValidPassword(String memberPwd);
 
-    LoginResponse loginResponse(String message, boolean status);
+    LoginResponse loginResponse(MemberLoginDto memberLoginDto);
 
 }
