@@ -14,8 +14,6 @@ const  headerName = ref('')
 
 
 watch(() => route.path, (curPath, prevPath) => {
-  console.log(curPath)
-  console.log(route.path)
   if (route.params == '/members') {
     headerName.value = 'Member Management System'
   } else {

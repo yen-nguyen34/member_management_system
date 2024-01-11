@@ -6,7 +6,7 @@
       <a class="font-semibold text-xl tracking-tight">{{ props.headerName ? props.headerName : 'Member Management System'
       }}</a>
     </div>
-    <div>
+    <div v-if="loggedIn">
       <button type="button" @click="logOut" class="text-white font-semibold text-xl tracking-tight items-center">
         <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
           fill="none" viewBox="0 0 14 10">
@@ -17,7 +17,14 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+import { ref } from 'vue'
 const props = defineProps(['headerName']);
+const loggedIn = ref()
+const router = useRouter()
+
 const logOut = () => {
+  router.push("/login");
+  loggedIn.value = false
 }
 </script>

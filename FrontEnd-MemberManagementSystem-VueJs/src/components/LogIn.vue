@@ -56,12 +56,6 @@ export default {
         };
     },
 
-    computed: {
-        fullEmail() {
-            return this.member.memberEmail + this.member.selectedDomain;
-        },
-    },
-
     methods: {
         save() {
             // Clear errors array before validation

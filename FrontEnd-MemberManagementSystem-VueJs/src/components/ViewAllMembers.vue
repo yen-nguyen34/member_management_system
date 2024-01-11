@@ -364,7 +364,7 @@ export default {
             // create "a" HTML element with href to file & click
             const link = document.createElement("a");
             link.href = href;
-            link.setAttribute("download", "exported_members.xlsx"); 
+            link.setAttribute("download", "exported_members.xlsx");
             document.body.appendChild(link);
             link.click();
 
